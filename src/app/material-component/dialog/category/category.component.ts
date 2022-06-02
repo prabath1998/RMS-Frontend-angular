@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { CategoryService } from 'src/app/services/category.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
   selector: 'app-category',
@@ -7,9 +11,34 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CategoryComponent implements OnInit {
 
-  constructor() { }
+  onAddCategory = new EventEmitter();
+  onEditCategory = new EventEmitter();
+  categoryForm:any = FormGroup;
+  dialogAction:any = "Add";
+  action:any="Add";
+  responseMessage:any;
+
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public dialogData:any,
+    private formBuilder:FormBuilder,
+    private categoryService:CategoryService,
+    public dialogRef:MatDialogRef<CategoryComponent>,
+    private snackbarService:SnackbarService
+  ) { }
 
   ngOnInit(): void {
+    this.categoryForm = this.formBuilder.group({
+      name:[null,[Validators.required]]
+    });
+    if (this.dialogData.action === 'Edit') {
+      this.dialogAction = "Edit";
+      this.action = "Update";
+      this.categoryForm.patchValue(this.dialogData.data);
+    }
+  }
+
+  handleSubmit(){
+    
   }
 
 }

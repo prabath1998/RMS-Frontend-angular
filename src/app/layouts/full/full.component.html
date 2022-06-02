@@ -9,15 +9,14 @@
                 </span>
             </b>
             <span fxShow="false" fxShow.gt-xs>
-                Cafe Management System
+                Restaurant Management System
             </span>
         </div>
         <span fxFlex></span>
         <app-header></app-header>
     </mat-toolbar>
     <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 0 : 0">
-        <mat-sidenav #snav id="snav" class="dark-sidebar pl-xs" [mode]="mobileQuery.matches ? 'side' : 'over'"
-            fixedTopGap="0" [opened]="mobileQuery.matches" [disableClose]="mobileQuery.matches">
+        <mat-sidenav #snav id="snav" class="dark-sidebar pl-xs" [mode]="mobileQuery.matches ? 'side' : 'over'" fixedTopGap="0" [opened]="mobileQuery.matches" [disableClose]="mobileQuery.matches">
             <app-sidebar></app-sidebar>
         </mat-sidenav>
         <mat-sidenav-content class="page-wrapper">
