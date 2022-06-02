@@ -23,7 +23,7 @@ export class CategoryService {
   }
 
   getCategories(){
-    this.httpClient.get(this.url+"/category/get");
+    return this.httpClient.get(this.url+"/category/get");
   }
   
 }

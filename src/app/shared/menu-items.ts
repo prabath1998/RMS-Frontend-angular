@@ -8,7 +8,9 @@ export interface Menu{
 }
 
 const MENU_ITEMS = [
-    {state:'dashboard',name:'Dashboard',icon:'dashboard',role:''}
+    {state:'dashboard',name:'Dashboard',icon:'dashboard',role:''},
+    {state:'category',name:'Manage Categories',icon:'category',role:'admin'}
+    
 ];
 
 @Injectable()
