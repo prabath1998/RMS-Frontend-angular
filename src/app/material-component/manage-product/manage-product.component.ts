@@ -14,7 +14,7 @@ import { GlobalConstants } from 'src/app/shared/global-constants';
 })
 export class ManageProductComponent implements OnInit {
 
-  displayedColumn:string[] =['name','categoryName','description','price','edit'];
+  displayedColumns:string[] =['name','categoryName','description','price','edit'];
   dataSource:any;
   responseMessage:any;
 
@@ -64,6 +64,10 @@ export class ManageProductComponent implements OnInit {
   }
 
   handleDeleteAction(values:any){
+
+  }
+
+  onChange(status:any,id:any){
 
   }
 
