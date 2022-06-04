@@ -10,7 +10,8 @@ export interface Menu{
 const MENU_ITEMS = [
     {state:'dashboard',name:'Dashboard',icon:'dashboard',role:''},
     {state:'category',name:'Manage Categories',icon:'category',role:'admin'},
-    {state:'product',name:'Manage Products',icon:'menu_book',role:'admin'}
+    {state:'product',name:'Manage Products',icon:'menu_book',role:'admin'},
+    {state:'order',name:'Manage Orders',icon:'list_alt',role:''}
     
 ];
 
