@@ -76,8 +76,47 @@ export class ProductComponent implements OnInit {
       price:formData.price,
       description:formData.description,
     }
+    this.productService.add(data).subscribe((response:any)=>{
+      this.dialogref.close;
+      this.onAddProduct.emit();
+      this.responseMessage = response.message;
+      this.snackbarServie.openSnackBar(this.responseMessage,"success");
+    },
+    (error:any)=>{
+      if (error.error?.message) {
+        this.responseMessage = error.error?.message;
+      }else{
+        this.responseMessage = GlobalConstants.genericError;
+      }
+      this.snackbarServie.openSnackBar(this.responseMessage,GlobalConstants.error);
+    }
+    )
   }
 
-  edit(){}
+  edit(){
+    var formData = this.productForm.value;
+    var data = {
+      id:this.dialogData.data.id,
+      name:formData.name,
+      categoryId:formData.categoryId,
+      price:formData.price,
+      description:formData.description,
+    }
+    this.productService.update(data).subscribe((response:any)=>{
+      this.dialogref.close;
+      this.onEditProduct.emit();
+      this.responseMessage = response.message;
+      this.snackbarServie.openSnackBar(this.responseMessage,"success");
+    },
+    (error:any)=>{
+      if (error.error?.message) {
+        this.responseMessage = error.error?.message;
+      }else{
+        this.responseMessage = GlobalConstants.genericError;
+      }
+      this.snackbarServie.openSnackBar(this.responseMessage,GlobalConstants.error);
+    }
+    )
+  }
 
 }
