@@ -102,8 +102,32 @@ export class ManageOrderComponent implements OnInit {
   setQuantity(value:any){
     var temp = this.manageOrderForm.controls['quantity'].value;
     if (temp > 0) {
-      this.manageOrderForm.controls['total'].setValue()
+      this.manageOrderForm.controls['total'].setValue(this.manageOrderForm.controls['quantity'].value * this.manageOrderForm.controls['price'].value);
+    }else if(temp != ''){
+      this.manageOrderForm.controls['quantity'].setValue('1');
+      this.manageOrderForm.controls['total'].setValue(this.manageOrderForm.controls['quantity'].value * this.manageOrderForm.controls['price'].value);
+
     }
   }
+
+  validateProductAdd(){
+    if (this.manageOrderForm.controls['total'].value === 0 || this.manageOrderForm.controls['total'].value === null || this.manageOrderForm.controls['quantity'].value <= 0) {
+      return true;
+      
+    }else{
+      return false;
+    }
+  }
+
+  validateSubmit(){
+    if (this.totalAmount === 0 || this.manageOrderForm.controls['name'].value === null || this.manageOrderForm.controls['email'].value === null || this.manageOrderForm.controls['contactNumber'].value === null || this.manageOrderForm.controls['paymentMethod'].value === null || !(this.manageOrderForm.controls['contactNumber'].valid) || !(this.manageOrderForm.controls['email'].valid)) {
+      return true;
+      
+    }else{
+      return false;
+    }
+  }
+
+  add(){}
 
 }
