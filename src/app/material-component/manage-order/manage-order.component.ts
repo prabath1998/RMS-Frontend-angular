@@ -144,7 +144,7 @@ export class ManageOrderComponent implements OnInit {
           total:formData.total
         });
         this.dataSource = [...this.dataSource];
-        this.snackbarService.openSnackBar(GlobalConstants.productExistError,"success");
+        this.snackbarService.openSnackBar(GlobalConstants.productAdded,"success");
     }else{
       this.snackbarService.openSnackBar(GlobalConstants.productExistError,GlobalConstants.error);
     }
@@ -185,6 +185,14 @@ export class ManageOrderComponent implements OnInit {
 
 
 
-  downloadFile(value:any){}
+  downloadFile(fileName:any){
+    var data = {
+      uuid:fileName
+    }
+    this.billService.getPDF(data).subscribe((response:any)=>{
+      saveAs(response,fileName+'.pdf');
+      this.ngxService.stop();
+    })
+  }
 
 }
