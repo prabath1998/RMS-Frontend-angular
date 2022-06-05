@@ -6,6 +6,7 @@ import { CategoryService } from 'src/app/services/category.service';
 import { ProductService } from 'src/app/services/product.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { GlobalConstants } from 'src/app/shared/global-constants';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-manage-order',
@@ -128,6 +129,62 @@ export class ManageOrderComponent implements OnInit {
     }
   }
 
-  add(){}
+  add(){
+    var formData = this.manageOrderForm.value;
+    var productName = this.dataSource.find((e:{id:number;})=>e.id == formData.product.id);
+    if(productName === undefined){
+      this.totalAmount = this.totalAmount + formData.total;
+      this.dataSource.push(
+        {
+          id:formData.product.id,
+          name:formData.product.name,
+          category:formData.category.name,
+          quantity:formData.quantity,
+          price:formData.price,
+          total:formData.total
+        });
+        this.dataSource = [...this.dataSource];
+        this.snackbarService.openSnackBar(GlobalConstants.productExistError,"success");
+    }else{
+      this.snackbarService.openSnackBar(GlobalConstants.productExistError,GlobalConstants.error);
+    }
+  }
+
+  handleDeleteAction(value:any,element:any){
+    this.totalAmount = this.totalAmount - element.total;
+    this.dataSource.splice(value,1);
+    this.dataSource = [...this.dataSource];
+  }
+
+  submitAction(){
+    this.ngxService.start();
+    var formData = this.manageOrderForm.value;
+    var data = {
+      name : formData.name,
+      email : formData.email,
+      contactNumber : formData.contactNumber,
+      paymentMethod : formData.paymentMethod,
+      totalAmount : this.totalAmount,
+      productDetails : JSON.stringify(this.dataSource)
+    }
+    this.billService.generateReport(data).subscribe((response:any)=>{
+      this.downloadFile(response?.uuid);
+      this.manageOrderForm.reset();
+      this.dataSource = [];
+      this.totalAmount = 0;
+    },(error:any)=>{
+      this.ngxService.stop();
+      if (error.error?.message) {
+        this.responseMessage = error.error?.message;
+      }else{
+        this.responseMessage = GlobalConstants.genericError;
+      }
+      this.snackbarService.openSnackBar(this.responseMessage,GlobalConstants.error);
+    })
+  }
+
+
+
+  downloadFile(value:any){}
 
 }
